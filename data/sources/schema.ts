@@ -1,8 +1,9 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const entriesTable = sqliteTable("entries", {
-    entryId: integer().primaryKey({ autoIncrement: true }),
+    entryId: integer().notNull().primaryKey({ autoIncrement: true }),
     title: text(),
-    date: text().notNull(),
+    dateCreated: text().notNull(),
+    dateModified: text().notNull(),
     content: text().notNull(),
 });

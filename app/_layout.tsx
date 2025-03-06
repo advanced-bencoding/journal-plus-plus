@@ -20,7 +20,7 @@ export default function RootLayout() {
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Tabs>
-          <Tabs.Screen name="(home)/index" options={{ title: "Home" }} />
+          <Tabs.Screen name="(home)" options={{ title: "Home" }} />
           <Tabs.Screen name="settings" options={{ title: "Settings" }} />
         </Tabs>
       </ThemeProvider>
