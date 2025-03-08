@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Button, Text } from "tamagui";
+import { Button, ScrollView, Text } from "tamagui";
 import { Plus } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
@@ -21,16 +21,17 @@ const Home = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Home</Text>
-            {entries.map((entry) => {
-                return (
-                    <Link href={`/entries/${entry.entryId}`} asChild>
-                        <Button><Text>
-                        Journal Entry: {entry.entryId}
-                            </Text></Button>
-                    </Link>
-                )
-            })}
+            <ScrollView style={{ flex: 1, backgroundColor:'red' }}>
+                {entries.map((entry) => {
+                    return (
+                        <Link href={`/entries/${entry.entryId}`} asChild key={entry.entryId}>
+                            <Button><Text>
+                            Journal Entry: {entry.entryId}
+                                </Text></Button>
+                        </Link>
+                    )
+                })}
+            </ScrollView>
             <Link href="/entries/new" asChild>
                 <Button
                     icon={<Plus color="white" size={30} />}

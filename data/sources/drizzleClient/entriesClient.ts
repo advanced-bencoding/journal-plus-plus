@@ -5,16 +5,24 @@ import { eq, desc } from "drizzle-orm";
 
 export const EntriesClient = {
     saveEntry: async (entry: Entry) => {
-        await db
-            .insert(entriesTable)
-            .values(
-                {
-                    entryId: entry.entryId,
-                    title: entry.title,
-                    content: entry.content,
-                    dateCreated: entry.dateCreated,
-                    dateModified: entry.dateModified
-                });
+        const dbEntry = {
+            entryId: entry.entryId,
+            title: entry.title,
+            content: entry.content,
+            dateCreated: entry.dateCreated,
+            dateModified: entry.dateModified
+        };
+        if (entry.entryId === undefined){
+            await db
+                .insert(entriesTable)
+                .values(dbEntry);
+        }
+        else {
+            await db
+                .update(entriesTable)
+                .set(entry)
+                .where(eq(entriesTable.entryId, entry.entryId))
+        }
     },
     getAllEntries: async (): Promise<Entry[]> => {
         const allEntries = await db.select().from(entriesTable).orderBy(desc(entriesTable.dateCreated));
