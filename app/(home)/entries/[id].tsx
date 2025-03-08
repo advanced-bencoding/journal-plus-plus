@@ -2,13 +2,31 @@ import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native"
 import { Button, Input, Text, TextArea } from "tamagui"
 import { Check } from "@tamagui/lucide-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getSingleEntry } from "@/domain/usecases/entries/getEntries";
+import { addEntry } from "@/domain/usecases/entries/saveEntry";
+import { router } from "expo-router"
 
 const JournalEntry = () => {
     const { id }: { id: string } = useLocalSearchParams();
     const isNewEntry = id.toLocaleLowerCase() === "new";
     const [title, setTitle] = useState<string | undefined>();
-    const [content, setContent] = useState<string>();
+    const [content, setContent] = useState<string>("");
+    // enable save only if there's some content
+
+    useEffect(() => {
+        if (!isNewEntry) {
+            getSingleEntry(Number(id))
+                .then((entryResult) => {
+                    if (entryResult) {
+                        setTitle(entryResult.title);
+                        setContent(entryResult.content);
+                    } else {
+                        throw new Error("failed to fetch entry")
+                    }
+                })
+        }
+    }, [])
 
     return (
         <View style={{ flex: 1 }}>
@@ -31,6 +49,16 @@ const JournalEntry = () => {
                     circular position="absolute"
                     style={{ top: "90%", left: "85%", backgroundColor: "green" }}
                     size="$5"
+                    onPress={() => {
+                        addEntry({
+                            content,
+                            title,
+                            entryId: isNewEntry ? undefined : Number(id),
+                            dateCreated: "",
+                            dateModified: ""
+                        });
+                        router.back();
+                    }}
                 />
         </View>
     )
