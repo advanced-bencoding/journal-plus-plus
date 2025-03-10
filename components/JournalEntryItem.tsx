@@ -9,14 +9,14 @@ interface JournalEntryItemProps {
     entryId: number;
 }
 
-const JournalEntryItem: React.FC<JournalEntryItemProps> = ({ dateModified, title, content, entryId }) => {
+const JournalEntryItem: React.FC<JournalEntryItemProps> = ({ dateModified, title, content, entryId, ...props }) => {
     const date = new Date(dateModified);
     const month = date.toLocaleString("en-us", { month: "short" });
     const day = date.getDate();
     let displayVal = title ?? content;
     displayVal = displayVal.slice(0, 10);
     return (
-        <Pressable style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 2, paddingVertical: 1 }}>
+        <Pressable {...props} style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 2, paddingVertical: 1 }}>
             <View style={{ flexDirection: "row" }}>
                 <View>
                     <View>
