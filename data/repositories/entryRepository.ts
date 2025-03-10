@@ -47,5 +47,8 @@ export const EntryRepository = {
             dateCreated: match.dateCreated,
             dateModified: match.dateModified,
         } satisfies Entry;
+    },
+    deleteEntry: async (entryId: number) => {
+        await db.delete(entriesTable).where(eq(entriesTable.entryId, entryId));
     }
 }

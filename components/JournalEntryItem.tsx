@@ -1,15 +1,17 @@
 import { Button, Text, View } from "tamagui";
 import { Trash } from "@tamagui/lucide-icons";
 import { Pressable } from "react-native";
+import { forwardRef } from "react";
 
 interface JournalEntryItemProps {
     dateModified: string;
     title?: string;
     content: string;
     entryId: number;
+    onDelete: () => void;
 }
 
-const JournalEntryItem: React.FC<JournalEntryItemProps> = ({ dateModified, title, content, entryId, ...props }) => {
+const JournalEntryItem: React.FC<JournalEntryItemProps> = forwardRef(({ dateModified, title, content, entryId, onDelete, ...props }, ref) => {
     const date = new Date(dateModified);
     const month = date.toLocaleString("en-us", { month: "short" });
     const day = date.getDate();
@@ -30,9 +32,9 @@ const JournalEntryItem: React.FC<JournalEntryItemProps> = ({ dateModified, title
                     <Text>{displayVal}</Text>
                 </View>
             </View>
-            <Button icon={Trash} />
+            <Button icon={Trash} onPress={onDelete} />
         </Pressable>
     );
-}
+});
 
 export default JournalEntryItem;
