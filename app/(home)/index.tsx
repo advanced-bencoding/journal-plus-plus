@@ -5,6 +5,7 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Entry } from "@/domain/models/entry";
 import { getAllEntries } from "@/domain/usecases/entries/getEntries";
+import JournalEntryItem from "@/components/JournalEntryItem";
 
 const Home = () => {
     const [entries, setEntries] = useState<Entry[]>([]);
@@ -25,9 +26,7 @@ const Home = () => {
                 {entries.map((entry) => {
                     return (
                         <Link href={`/entries/${entry.entryId}`} asChild key={entry.entryId}>
-                            <Button><Text>
-                            Journal Entry: {entry.entryId}
-                                </Text></Button>
+                            <JournalEntryItem dateModified={entry.dateModified} title={entry.title} content={entry.content} entryId={entry.entryId!} />
                         </Link>
                     )
                 })}
