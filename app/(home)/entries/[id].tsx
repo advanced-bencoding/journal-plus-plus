@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
-import { Button, Input, Text, TextArea } from "tamagui";
+import { Button, Input, TextArea } from "tamagui";
 import { Check } from "@tamagui/lucide-icons";
 import { useEffect, useState } from "react";
 import { getSingleEntry } from "@/domain/usecases/entries/getEntries";
@@ -25,6 +25,7 @@ const JournalEntry = () => {
         }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import { Stack, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import migrations from "../data/migrations/migrations";
 import db from "@/data/sources/drizzleClient/SQLiteDatabase";
