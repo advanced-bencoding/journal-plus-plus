@@ -1,4 +1,4 @@
-import { EntriesClient } from "@/data/sources/drizzleClient/entriesClient";
+import { EntryRepository } from "@/data/repositories/entryRepository";
 import { Entry } from "@/domain/models/entry";
 
 export const addEntry = async (entry: Entry) => {
@@ -9,5 +9,5 @@ export const addEntry = async (entry: Entry) => {
     if (entry.entryId === undefined) {
         entry.dateCreated = dateModified;
     }
-    await EntriesClient.saveEntry(entry);
+    await EntryRepository.saveEntry(entry);
 }
