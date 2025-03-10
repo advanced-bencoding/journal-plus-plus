@@ -1,15 +1,19 @@
-import { AlertDialog, Button, XStack, YStack } from 'tamagui';
+import { AlertDialog, Button, XStack, YStack } from "tamagui";
 
 interface AlertPopupProps {
-    isOpen: boolean;
-    onConfirm: () => void;
-    onCancel: () => void;
+  isOpen: boolean;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
-const AlertPopup: React.FC<AlertPopupProps> = ({ isOpen, onConfirm, onCancel }) => {
+const AlertPopup: React.FC<AlertPopupProps> = ({
+  isOpen,
+  onConfirm,
+  onCancel,
+}) => {
   return (
     <AlertDialog native open={isOpen}>
-              <AlertDialog.Trigger asChild>
+      <AlertDialog.Trigger asChild>
         <Button style={{ display: "none" }}>Show Alert</Button>
       </AlertDialog.Trigger>
 
@@ -26,7 +30,7 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ isOpen, onConfirm, onCancel }) 
           elevate
           key="content"
           animation={[
-            'quick',
+            "quick",
             {
               opacity: {
                 overshootClamping: true,
@@ -58,7 +62,7 @@ const AlertPopup: React.FC<AlertPopupProps> = ({ isOpen, onConfirm, onCancel }) 
         </AlertDialog.Content>
       </AlertDialog.Portal>
     </AlertDialog>
-  )
-}
+  );
+};
 
 export default AlertPopup;

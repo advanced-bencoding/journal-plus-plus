@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { Button, ScrollView, Text } from "tamagui";
+import { Button, ScrollView } from "tamagui";
 import { Plus } from "@tamagui/lucide-icons";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";

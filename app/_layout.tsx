@@ -5,20 +5,24 @@ import db from "@/data/sources/drizzleClient/SQLiteDatabase";
 import { Text, useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "@/tamagui.config";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from "@react-navigation/native";
 
 export default function RootLayout() {
   const { success, error } = useMigrations(db, migrations);
-  const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme();
   if (error) {
     throw new Error(error.message);
   }
   if (!success) {
-    return <Text>Migrating..</Text>
+    return <Text>Migrating..</Text>;
   }
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Tabs>
           <Tabs.Screen name="(home)" options={{ title: "Home" }} />
           <Tabs.Screen name="settings" options={{ title: "Settings" }} />
