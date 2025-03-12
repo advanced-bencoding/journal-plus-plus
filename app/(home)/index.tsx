@@ -10,54 +10,65 @@ import AlertPopup from "@/components/AlertDialog";
 import { deleteEntry } from "@/domain/usecases/entries/deleteEntry";
 
 const Home = () => {
-    const [entries, setEntries] = useState<Entry[]>([]);
-    const [deletePopperEntryId, setDeletePopperEntryId] = useState<number | undefined>();
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [deletePopperEntryId, setDeletePopperEntryId] = useState<
+    number | undefined
+  >();
 
-    useEffect(() => {
-        getAllEntries()
-            .then((result) => {
-                setEntries(result);
-            })
-            .catch((error) => {
-                throw new Error(error.message);
-            })
-    });
+  useEffect(() => {
+    getAllEntries()
+      .then((result) => {
+        setEntries(result);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
+      });
+  });
 
-    return (
-        <View style={{ flex: 1 }}>
-            <ScrollView style={{ flex: 1, backgroundColor:'red' }}>
-                {entries.map((entry) => {
-                    return (
-                        <Link href={`/entries/${entry.entryId}`} asChild key={entry.entryId}>
-                            <JournalEntryItem
-                                dateModified={entry.dateModified}
-                                title={entry.title}
-                                content={entry.content}
-                                entryId={entry.entryId!}
-                                onDelete={() => {
-                                    setDeletePopperEntryId(entry.entryId);
-                                }}
-                            />
-                        </Link>
-                    )
-                })}
-            </ScrollView>
-            <Link href="/entries/new" asChild>
-                <Button
-                    icon={<Plus color="white" size={30} />}
-                    circular position="absolute"
-                    style={{ top: "90%", left: "85%", backgroundColor: "green" }}
-                    size="$5"
-                />
+  return (
+    <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: "red" }}>
+        {entries.map((entry) => {
+          return (
+            <Link
+              href={`/entries/${entry.entryId}`}
+              asChild
+              key={entry.entryId}
+            >
+              <JournalEntryItem
+                dateCreated={entry.dateCreated}
+                title={entry.title}
+                content={entry.content}
+                entryId={entry.entryId!}
+                onDelete={() => {
+                  setDeletePopperEntryId(entry.entryId);
+                }}
+              />
             </Link>
-            <AlertPopup isOpen={deletePopperEntryId !== undefined} onConfirm={() => {
-                deleteEntry(deletePopperEntryId!);
-                setDeletePopperEntryId(undefined);
-            }} onCancel={() => {
-                setDeletePopperEntryId(undefined);
-            }} />
-        </View>
-    )
-}
+          );
+        })}
+      </ScrollView>
+      <Link href="/entries/new" asChild>
+        <Button
+          icon={<Plus color="white" size={30} />}
+          circular
+          position="absolute"
+          style={{ top: "90%", left: "85%", backgroundColor: "green" }}
+          size="$5"
+        />
+      </Link>
+      <AlertPopup
+        isOpen={deletePopperEntryId !== undefined}
+        onConfirm={() => {
+          deleteEntry(deletePopperEntryId!);
+          setDeletePopperEntryId(undefined);
+        }}
+        onCancel={() => {
+          setDeletePopperEntryId(undefined);
+        }}
+      />
+    </View>
+  );
+};
 
 export default Home;

@@ -4,7 +4,7 @@ import { Pressable } from "react-native";
 import { forwardRef } from "react";
 
 interface JournalEntryItemProps {
-  dateModified: string;
+  dateCreated: string;
   title?: string;
   content: string;
   entryId: number;
@@ -12,8 +12,8 @@ interface JournalEntryItemProps {
 }
 
 const JournalEntryItem: React.FC<JournalEntryItemProps> = forwardRef(
-  ({ dateModified, title, content, entryId, onDelete, ...props }, ref) => {
-    const date = new Date(dateModified);
+  ({ dateCreated, title, content, entryId, onDelete, ...props }, ref) => {
+    const date = new Date(dateCreated);
     const month = date.toLocaleString("en-us", { month: "short" });
     const day = date.getDate();
     let displayVal = title ?? content;

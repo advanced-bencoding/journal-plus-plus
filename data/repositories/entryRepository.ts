@@ -7,7 +7,7 @@ export const EntryRepository = {
   saveEntry: async (entry: Entry) => {
     const dbEntry = {
       entryId: entry.entryId,
-      title: entry.title,
+      title: entry.title?.length === 0 ? undefined : entry.title,
       content: entry.content,
       dateCreated: entry.dateCreated,
       dateModified: entry.dateModified,
@@ -17,7 +17,7 @@ export const EntryRepository = {
     } else {
       await db
         .update(entriesTable)
-        .set(entry)
+        .set(dbEntry)
         .where(eq(entriesTable.entryId, entry.entryId));
     }
   },
@@ -25,7 +25,7 @@ export const EntryRepository = {
     const allEntries = await db
       .select()
       .from(entriesTable)
-      .orderBy(desc(entriesTable.dateModified));
+      .orderBy(desc(entriesTable.dateCreated));
     return allEntries.map(
       (entry) =>
         ({

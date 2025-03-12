@@ -6,12 +6,18 @@ import { useEffect, useState } from "react";
 import { getSingleEntry } from "@/domain/usecases/entries/getEntries";
 import { addEntry } from "@/domain/usecases/entries/saveEntry";
 import { router } from "expo-router";
+import { Entry } from "@/domain/models/entry";
 
 const JournalEntry = () => {
   const { id }: { id: string } = useLocalSearchParams();
   const isNewEntry = id.toLocaleLowerCase() === "new";
   const [title, setTitle] = useState<string | undefined>();
   const [content, setContent] = useState<string>("");
+  const [entry, setEntry] = useState<Entry>({
+    dateCreated: "",
+    dateModified: "",
+    content: "",
+  });
   // enable save only if there's some content
 
   useEffect(() => {
@@ -20,6 +26,12 @@ const JournalEntry = () => {
         if (entryResult) {
           setTitle(entryResult.title);
           setContent(entryResult.content);
+          setEntry({
+            title: entryResult.title,
+            content: entryResult.content,
+            dateCreated: entryResult.dateCreated,
+            dateModified: entryResult.dateModified,
+          });
         } else {
           throw new Error("failed to fetch entry");
         }
@@ -66,8 +78,8 @@ const JournalEntry = () => {
             content,
             title,
             entryId: isNewEntry ? undefined : Number(id),
-            dateCreated: "",
-            dateModified: "",
+            dateCreated: entry.dateCreated,
+            dateModified: entry.dateModified,
           });
           router.back();
         }}
