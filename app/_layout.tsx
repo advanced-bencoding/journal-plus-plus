@@ -10,6 +10,8 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { Home } from "@tamagui/lucide-icons";
+import { Settings } from "@tamagui/lucide-icons";
 
 export default function RootLayout() {
   const { success, error } = useMigrations(db, migrations);
@@ -24,8 +26,14 @@ export default function RootLayout() {
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Tabs>
-          <Tabs.Screen name="(home)" options={{ title: "Home" }} />
-          <Tabs.Screen name="settings" options={{ title: "Settings" }} />
+          <Tabs.Screen
+            name="(home)"
+            options={{ title: "Home", tabBarIcon: () => <Home /> }}
+          />
+          <Tabs.Screen
+            name="settings"
+            options={{ title: "Settings", tabBarIcon: () => <Settings /> }}
+          />
         </Tabs>
       </ThemeProvider>
     </TamaguiProvider>

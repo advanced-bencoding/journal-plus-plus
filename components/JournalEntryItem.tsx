@@ -17,7 +17,6 @@ const JournalEntryItem: React.FC<JournalEntryItemProps> = forwardRef(
     const month = date.toLocaleString("en-us", { month: "short" });
     const day = date.getDate();
     let displayVal = title ?? content;
-    displayVal = displayVal.slice(0, 10);
     return (
       <Pressable {...props} style={styles.itemWrapper}>
         <View style={styles.metaDataWrapper}>
@@ -30,7 +29,9 @@ const JournalEntryItem: React.FC<JournalEntryItemProps> = forwardRef(
             </View>
           </View>
           <View style={styles.textWrapper}>
-            <Text>{displayVal}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail" width={190}>
+              {displayVal}
+            </Text>
           </View>
         </View>
         <Button icon={Trash} onPress={onDelete} />
@@ -60,11 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
   },
   metaDataWrapper: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   textWrapper: {
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default JournalEntryItem;

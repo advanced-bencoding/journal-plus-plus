@@ -5,9 +5,10 @@ import { entriesTable } from "../sources/drizzleClient/schema";
 
 export const EntryRepository = {
   saveEntry: async (entry: Entry) => {
+    console.log(entry);
     const dbEntry = {
       entryId: entry.entryId,
-      title: entry.title?.length === 0 ? undefined : entry.title,
+      title: entry.title && entry.title.length > 0 ? entry.title : null,
       content: entry.content,
       dateCreated: entry.dateCreated,
       dateModified: entry.dateModified,
